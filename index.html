@@ -2,6 +2,10 @@
 <html lang="es">
 <head>
   <script>
+    function ocultarCatalogoYVolverInicio() {
+  document.getElementById('catalogo').style.display = 'none';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
   function mostrarCatalogo() {
     document.getElementById('catalogo').style.display = 'block';
     window.scrollTo({ top: document.getElementById('catalogo').offsetTop, behavior: 'smooth' });
@@ -149,7 +153,7 @@
     <p>Todo lo que necesitás en un solo lugar</p>
   </header>
   <nav>
-    <a href="#inicio">Inicio</a>
+    <a href="javascript:void(0)" onclick="ocultarCatalogoYVolverInicio()">Inicio</a>
     <a href="javascript:void(0)" onclick="mostrarCatalogo()">Catálogo</a>
     <a href="#contacto">Contacto</a>
   </nav>
