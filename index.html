@@ -1,6 +1,15 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+  <script>
+  function mostrarCatalogo() {
+    document.getElementById('catalogo').style.display = 'block';
+    window.scrollTo({ top: document.getElementById('catalogo').offsetTop, behavior: 'smooth' });
+  }
+  window.onload = () => {
+    document.getElementById('catalogo').style.display = 'none';
+  }
+</script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Ferretería Due</title>
@@ -141,7 +150,7 @@
   </header>
   <nav>
     <a href="#inicio">Inicio</a>
-    <a href="#catalogo">Catálogo</a>
+    <a href="javascript:void(0)" onclick="mostrarCatalogo()">Catálogo</a>
     <a href="#contacto">Contacto</a>
   </nav>
   <section id="inicio">
