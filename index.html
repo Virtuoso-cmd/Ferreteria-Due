@@ -182,14 +182,20 @@
 
   <script>
     function ocultarCatalogoYVolverInicio() {
-      document.getElementById('catalogo').style.display = 'none';
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+  const catalogo = document.getElementById('catalogo');
+  catalogo.style.visibility = 'hidden';
+  catalogo.style.height = '0';
+  catalogo.style.overflow = 'hidden';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
     }
-
     function mostrarCatalogo() {
-      document.getElementById('catalogo').style.display = 'block';
-      window.scrollTo({ top: document.getElementById('catalogo').offsetTop, behavior: 'smooth' });
-    }
+  const catalogo = document.getElementById('catalogo');
+  catalogo.style.visibility = 'visible';
+  catalogo.style.height = 'auto';
+  catalogo.style.overflow = 'visible';
+  window.scrollTo({ top: catalogo.offsetTop, behavior: 'smooth' });
+}
   </script>
 </body>
 </html>
