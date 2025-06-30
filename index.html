@@ -74,7 +74,11 @@
       color: #004d40;
     }
     #catalogo {
-      display: none; /* <- ESTO OCULTA EL CATÁLOGO AL CARGAR */
+  visibility: hidden;
+  height: 0;
+  overflow: hidden;
+  transition: height 0.3s ease;
+}
     }
     .catalogo {
       display: grid;
