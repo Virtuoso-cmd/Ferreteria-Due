@@ -1,5 +1,4 @@
-
-  <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
@@ -86,23 +85,38 @@
     .producto {
       background: #fff;
       border-radius: 10px;
-      box-shadow: 0 4px 8px rgb(0 0 0 / 0.1);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
       padding: 20px;
       text-align: center;
       transition: transform 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
     }
     .producto:hover {
       transform: translateY(-8px);
-      box-shadow: 0 8px 16px rgb(0 0 0 / 0.15);
+      box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+    }
+    .producto img {
+      width: 100%;
+      height: 180px;
+      object-fit: contain;
+      margin-bottom: 15px;
     }
     .producto h3 {
       margin-bottom: 10px;
       color: #00796b;
-      font-size: 1.3rem;
+      font-size: 1.2rem;
     }
     .producto p {
-      font-size: 1rem;
-      color: #555;
+      font-size: 0.95rem;
+      color: #444;
+      margin-bottom: 10px;
+    }
+    .producto .precio {
+      color: #e53935;
+      font-weight: bold;
+      font-size: 1.1rem;
     }
     #contacto p {
       font-size: 1.1rem;
@@ -156,40 +170,33 @@
     <h2>Bienvenidos a Ferretería Due</h2>
     <p>En Due encontrarás herramientas, materiales y soluciones para tu hogar o proyecto.</p>
   </section>
-  <section id="buscador" style="max-width: 1100px; margin: 40px auto; padding: 0 20px;">
-  <input type="text" id="inputBuscador" placeholder="Buscar producto..." onkeyup="filtrarProductos()" style="width: 100%; padding: 12px; font-size: 1rem; border-radius: 5px; border: none; box-shadow: 0 0 5px rgba(0,0,0,0.2);">
-</section>
+  <section id="buscador">
+    <input type="text" id="inputBuscador" placeholder="Buscar producto..." onkeyup="filtrarProductos()" style="width: 100%; padding: 12px; font-size: 1rem; border-radius: 5px; border: none; box-shadow: 0 0 5px rgba(0,0,0,0.2);">
+  </section>
   <section id="catalogo">
     <h2>Catálogo de productos</h2>
     <div class="catalogo">
-      <div id="mensajeNoEncontrado" style="display: none; color: #ff5555; text-align: center; font-weight: bold; margin-top: 20px;">
-  No se encontraron productos.
-</div>
-``>
-
-Quedaría así:
-
-```html
-<div class="catalogo">
-  <!-- productos -->
-</div>
-
-<div id="mensajeNoEncontrado" style="display: none; color: #ff5555; text-align: center; font-weight: bold; margin-top: 20px;">
-  No se encontraron productos.
-</div>
-
       <div class="producto">
+        <img src="martillo.jpg" alt="Martillo">
         <h3>Martillo</h3>
         <p>Martillo de carpintero con mango de madera.</p>
+        <span class="precio">$5.000</span>
       </div>
       <div class="producto">
+        <img src="destornillador.jpg" alt="Destornillador">
         <h3>Destornillador</h3>
         <p>Destornillador plano de acero templado.</p>
+        <span class="precio">$3.200</span>
       </div>
       <div class="producto">
+        <img src="pintura.jpg" alt="Pintura Latex">
         <h3>Pintura Latex</h3>
         <p>Pintura blanca para interior/exterior, 4L.</p>
+        <span class="precio">$7.500</span>
       </div>
+    </div>
+    <div id="mensajeNoEncontrado" style="display: none; color: #ff5555; text-align: center; font-weight: bold; margin-top: 20px;">
+      No se encontraron productos.
     </div>
   </section>
   <section id="contacto">
@@ -202,24 +209,23 @@ Quedaría así:
   </footer>
 
   <script>
-   function filtrarProductos() {
-  const input = document.getElementById('inputBuscador');
-  const filtro = input.value.toLowerCase();
-  const productos = document.querySelectorAll('.producto');
-  const mensaje = document.getElementById('mensajeNoEncontrado');
+    function filtrarProductos() {
+      const input = document.getElementById('inputBuscador');
+      const filtro = input.value.toLowerCase();
+      const productos = document.querySelectorAll('.producto');
+      const mensaje = document.getElementById('mensajeNoEncontrado');
+      let hayCoincidencias = false;
 
-  let hayCoincidencias = false;
+      productos.forEach(prod => {
+        const texto = prod.innerText.toLowerCase();
+        const coincide = texto.includes(filtro);
+        prod.style.display = coincide ? 'block' : 'none';
+        if (coincide) hayCoincidencias = true;
+      });
 
-  productos.forEach(prod => {
-    const texto = prod.innerText.toLowerCase();
-    const coincide = texto.includes(filtro);
-    prod.style.display = coincide ? 'block' : 'none';
-    if (coincide) hayCoincidencias = true;
-  });
+      mensaje.style.display = hayCoincidencias ? 'none' : 'block';
+    }
 
-  mensaje.style.display = hayCoincidencias ? 'none' : 'block';
-}
-}
     function ocultarCatalogoYVolverInicio() {
       const catalogo = document.getElementById('catalogo');
       catalogo.style.visibility = 'hidden';
