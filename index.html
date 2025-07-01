@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Ferretería Due - Mega Menú</title>
+<title>Ferretería Due - Mega Menú Catálogo</title>
 <style>
   * {
     box-sizing: border-box;
@@ -57,24 +57,25 @@
     color: white;
   }
 
-  /* Mega menú base */
-  .mega-menu {
-    position: absolute;
-    top: 100%;
-    left: 0;
+  /* Mega menú completo desplegado */
+  #megaMenuContainer {
+    display: none;
     width: 100vw;
     background: #004d40;
     color: #cfd8dc;
     box-shadow: 0 4px 15px rgba(0,0,0,0.4);
-    display: none;
     padding: 20px 40px;
     box-sizing: border-box;
+    position: absolute;
+    top: 100%;
+    left: 0;
     z-index: 9999;
-  }
-  .mega-menu.active {
-    display: flex;
+    flex-wrap: wrap;
     justify-content: center;
     gap: 50px;
+  }
+  #megaMenuContainer.active {
+    display: flex;
   }
   .mega-column {
     min-width: 180px;
@@ -195,13 +196,13 @@
 
   /* Responsive */
   @media (max-width: 900px) {
-    .mega-menu {
-      flex-wrap: wrap;
-      gap: 20px;
-      padding: 20px;
+    #megaMenuContainer {
       position: static;
       width: 100%;
       box-shadow: none;
+      padding: 20px 10px;
+      gap: 20px;
+      flex-wrap: wrap;
     }
     nav .menu {
       flex-wrap: wrap;
@@ -225,29 +226,49 @@
 
 <nav>
   <ul class="menu" role="menubar">
-    <li role="none"><a href="javascript:void(0)" role="menuitem" id="menuInicio">Inicio</a></li>
-    <li role="none" class="has-mega" data-menu="por-marca" tabindex="0">
-      <a href="javascript:void(0)" role="menuitem" aria-haspopup="true" aria-expanded="false">Por Marca ▾</a>
-    </li>
-    <li role="none" class="has-mega" data-menu="electricista" tabindex="0">
-      <a href="javascript:void(0)" role="menuitem" aria-haspopup="true" aria-expanded="false">Electricista ▾</a>
-    </li>
-    <li role="none" class="has-mega" data-menu="herramientas" tabindex="0">
-      <a href="javascript:void(0)" role="menuitem" aria-haspopup="true" aria-expanded="false">Herramientas manuales ▾</a>
-    </li>
-    <li role="none" class="has-mega" data-menu="manuales" tabindex="0">
-      <a href="javascript:void(0)" role="menuitem" aria-haspopup="true" aria-expanded="false">Manuales ▾</a>
-    </li>
-    <li role="none"><a href="javascript:void(0)" role="menuitem" id="menuIndustriales">Industriales</a></li>
-    <li role="none"><a href="javascript:void(0)" role="menuitem" id="menuNeumaticas">Neumáticas</a></li>
-    <li role="none"><a href="javascript:void(0)" role="menuitem" id="menuMedicion">Medición</a></li>
-    <li role="none"><a href="javascript:void(0)" role="menuitem" id="menuJardin">Para Jardín</a></li>
-    <li role="none"><a href="javascript:void(0)" role="menuitem" id="menuAccesorios">Accesorios</a></li>
+    <li role="none"><a href="#" role="menuitem" id="menuInicio" class="active">Inicio</a></li>
+    <li role="none"><a href="#" role="menuitem" id="menuCatalogo">Catálogo ▾</a></li>
+    <li role="none"><a href="#contacto" role="menuitem">Contacto</a></li>
   </ul>
 
-  <!-- Mega menú contenedor -->
-  <div id="megaMenuContainer" class="mega-menu" aria-label="Submenú">
-    <!-- Contenido dinámico -->
+  <!-- Mega menú desplegado completo -->
+  <div id="megaMenuContainer" aria-label="Catálogo completo">
+    <div class="mega-column">
+      <h3>Por Marca</h3>
+      <ul>
+        <li><a href="#">Marca A</a></li>
+        <li><a href="#">Marca B</a></li>
+        <li><a href="#">Marca C</a></li>
+      </ul>
+    </div>
+    <div class="mega-column">
+      <h3>Electricista</h3>
+      <ul>
+        <li><a href="#">prueba 1</a></li>
+        <li><a href="#">prueba 2</a></li>
+      </ul>
+      <h3>Herramientas manuales</h3>
+      <ul>
+        <li><a href="#">Equipos</a></li>
+        <li><a href="#">Accesorios</a></li>
+        <li><a href="#">brocas</a></li>
+        <li><a href="#">discos de corte</a></li>
+      </ul>
+    </div>
+    <div class="mega-column">
+      <h3>Manuales</h3>
+      <ul>
+        <li><a href="#">alicates</a></li>
+        <li><a href="#">pinzas</a></li>
+      </ul>
+    </div>
+    <div class="mega-column">
+      <h3>Industriales</h3>
+      <h3>Neumáticas</h3>
+      <h3>Medición</h3>
+      <h3>Para Jardín</h3>
+      <h3>Accesorios</h3>
+    </div>
   </div>
 </nav>
 
@@ -293,170 +314,52 @@
 </footer>
 
 <script>
-  const megaMenuContainer = document.getElementById('megaMenuContainer');
-  const menuItems = document.querySelectorAll('.menu > li.has-mega');
+  const megaMenu = document.getElementById('megaMenuContainer');
+  const btnCatalogo = document.getElementById('menuCatalogo');
+  const btnInicio = document.getElementById('menuInicio');
   const inicioSection = document.getElementById('inicio');
-  const catalogoSection = document.getElementById('catalogo');
   const contactoSection = document.getElementById('contacto');
-  const menuInicio = document.getElementById('menuInicio');
-
-  // Contenidos de cada mega menú
-  const megaMenus = {
-    'por-marca': `
-      <div class="mega-column">
-        <h3>Por Marca</h3>
-        <ul>
-          <li><a href="#">Marca A</a></li>
-          <li><a href="#">Marca B</a></li>
-          <li><a href="#">Marca C</a></li>
-        </ul>
-      </div>
-    `,
-    'electricista': `
-      <div class="mega-column">
-        <h3>Electricista</h3>
-        <ul>
-          <li><a href="#">prueba 1</a></li>
-          <li><a href="#">prueba 2</a></li>
-        </ul>
-      </div>
-      <div class="mega-column">
-        <h3>Herramientas manuales</h3>
-        <ul>
-          <li><a href="#">Equipos</a></li>
-          <li><a href="#">Accesorios</a></li>
-          <li><a href="#">brocas</a></li>
-          <li><a href="#">discos de corte</a></li>
-        </ul>
-      </div>
-    `,
-    'herramientas': `
-      <div class="mega-column">
-        <h3>Herramientas manuales</h3>
-        <ul>
-          <li><a href="#">Equipos</a></li>
-          <li><a href="#">Accesorios</a></li>
-          <li><a href="#">brocas</a></li>
-          <li><a href="#">discos de corte</a></li>
-        </ul>
-      </div>
-    `,
-    'manuales': `
-      <div class="mega-column">
-        <h3>Manuales</h3>
-        <ul>
-          <li><a href="#">alicates</a></li>
-          <li><a href="#">pinzas</a></li>
-        </ul>
-      </div>
-    `
-  };
+  const catalogoSection = document.getElementById('catalogo');
+  const menuLinks = document.querySelectorAll('.menu > li > a');
 
   function mostrarSeccion(seccion) {
-    inicioSection.style.display = 'none';
-    catalogoSection.style.display = 'none';
-    contactoSection.style.display = 'none';
-    megaMenuContainer.classList.remove('active');
-    if (seccion === 'inicio') {
+    if(seccion === 'inicio') {
       inicioSection.style.display = 'block';
       contactoSection.style.display = 'block';
-    } else if (seccion === 'catalogo') {
+      catalogoSection.style.display = 'none';
+      megaMenu.classList.remove('active');
+      marcarActivo(btnInicio);
+    } else if(seccion === 'catalogo') {
+      inicioSection.style.display = 'none';
+      contactoSection.style.display = 'none';
       catalogoSection.style.display = 'block';
+      megaMenu.classList.add('active');
+      marcarActivo(btnCatalogo);
     }
   }
-
-  function abrirMegaMenu(menu) {
-    if (!menu || !megaMenus[menu]) {
-      megaMenuContainer.classList.remove('active');
-      return;
-    }
-    megaMenuContainer.innerHTML = megaMenus[menu];
-    megaMenuContainer.classList.add('active');
-    mostrarSeccion('catalogo');
-  }
-
-  // Eventos menú principal
-  menuItems.forEach(item => {
-    item.addEventListener('mouseenter', () => {
-      const menu = item.dataset.menu;
-      abrirMegaMenu(menu);
-      marcarActivo(item.querySelector('a'));
-    });
-    item.addEventListener('mouseleave', () => {
-      megaMenuContainer.classList.remove('active');
-      quitarActivo();
-    });
-    // Para accesibilidad keyboard
-    item.addEventListener('focusin', () => {
-      const menu = item.dataset.menu;
-      abrirMegaMenu(menu);
-      marcarActivo(item.querySelector('a'));
-    });
-    item.addEventListener('focusout', () => {
-      // Esperar para ver si foco se mueve a mega menú
-      setTimeout(() => {
-        if (!megaMenuContainer.contains(document.activeElement)) {
-          megaMenuContainer.classList.remove('active');
-          quitarActivo();
-        }
-      }, 100);
-    });
-  });
-
-  // Para cerrar mega menú si el foco sale de él
-  megaMenuContainer.addEventListener('focusout', () => {
-    setTimeout(() => {
-      if (!megaMenuContainer.contains(document.activeElement)) {
-        megaMenuContainer.classList.remove('active');
-        quitarActivo();
-      }
-    }, 100);
-  });
-
-  // Mostrar inicio y ocultar mega menú con botón Inicio
-  menuInicio.addEventListener('click', () => {
-    mostrarSeccion('inicio');
-    quitarActivo();
-  });
-
-  // Menús sin mega que sólo muestran catálogo
-  document.getElementById('menuIndustriales').addEventListener('click', () => {
-    megaMenuContainer.classList.remove('active');
-    mostrarSeccion('catalogo');
-    quitarActivo();
-  });
-  document.getElementById('menuNeumaticas').addEventListener('click', () => {
-    megaMenuContainer.classList.remove('active');
-    mostrarSeccion('catalogo');
-    quitarActivo();
-  });
-  document.getElementById('menuMedicion').addEventListener('click', () => {
-    megaMenuContainer.classList.remove('active');
-    mostrarSeccion('catalogo');
-    quitarActivo();
-  });
-  document.getElementById('menuJardin').addEventListener('click', () => {
-    megaMenuContainer.classList.remove('active');
-    mostrarSeccion('catalogo');
-    quitarActivo();
-  });
-  document.getElementById('menuAccesorios').addEventListener('click', () => {
-    megaMenuContainer.classList.remove('active');
-    mostrarSeccion('catalogo');
-    quitarActivo();
-  });
 
   function marcarActivo(link) {
-    quitarActivo();
-    if (link) link.classList.add('active');
+    menuLinks.forEach(a => a.classList.remove('active'));
+    if(link) link.classList.add('active');
   }
-  function quitarActivo() {
-    document.querySelectorAll('.menu > li > a.active').forEach(a => a.classList.remove('active'));
-  }
+
+  btnCatalogo.addEventListener('click', e => {
+    e.preventDefault();
+    mostrarSeccion('catalogo');
+  });
+
+  btnInicio.addEventListener('click', e => {
+    e.preventDefault();
+    mostrarSeccion('inicio');
+  });
 
   // Inicial
   mostrarSeccion('inicio');
 </script>
+
+</body>
+</html>
+
 
 </body>
 </html>
