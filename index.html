@@ -162,6 +162,22 @@
   <section id="catalogo">
     <h2>Catálogo de productos</h2>
     <div class="catalogo">
+      <div id="mensajeNoEncontrado" style="display: none; color: #ff5555; text-align: center; font-weight: bold; margin-top: 20px;">
+  No se encontraron productos.
+</div>
+``>
+
+Quedaría así:
+
+```html
+<div class="catalogo">
+  <!-- productos -->
+</div>
+
+<div id="mensajeNoEncontrado" style="display: none; color: #ff5555; text-align: center; font-weight: bold; margin-top: 20px;">
+  No se encontraron productos.
+</div>
+
       <div class="producto">
         <h3>Martillo</h3>
         <p>Martillo de carpintero con mango de madera.</p>
@@ -186,17 +202,24 @@
   </footer>
 
   <script>
-    function filtrarProductos() {
+   function filtrarProductos() {
   const input = document.getElementById('inputBuscador');
   const filtro = input.value.toLowerCase();
   const productos = document.querySelectorAll('.producto');
+  const mensaje = document.getElementById('mensajeNoEncontrado');
+
+  let hayCoincidencias = false;
 
   productos.forEach(prod => {
     const texto = prod.innerText.toLowerCase();
-    prod.style.display = texto.includes(filtro) ? 'block' : 'none';
+    const coincide = texto.includes(filtro);
+    prod.style.display = coincide ? 'block' : 'none';
+    if (coincide) hayCoincidencias = true;
   });
-}
 
+  mensaje.style.display = hayCoincidencias ? 'none' : 'block';
+}
+}
     function ocultarCatalogoYVolverInicio() {
       const catalogo = document.getElementById('catalogo');
       catalogo.style.visibility = 'hidden';
