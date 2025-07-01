@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Ferretería Due</title>
   <style>
+    /* Reset básico */
     * {
       box-sizing: border-box;
       margin: 0;
@@ -12,146 +13,227 @@
     }
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      color: #f5f5f5;
-      background: url('due.jpeg') no-repeat center top fixed;
-      background-size: contain;
-      background-repeat: no-repeat;
-      background-color: #000;
+      background-color: #000; /* Fondo negro */
+      color: #333;
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
     }
+    /* Header con logo + buscador */
     header {
-      background: #004d40;
-      color: #fff;
-      padding: 30px 20px;
-      text-align: center;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+      background-color: #004d40;
+      color: white;
+      padding: 15px 20px;
       position: sticky;
       top: 0;
-      z-index: 100;
+      z-index: 1000;
+      box-shadow: 0 3px 6px rgba(0,0,0,0.3);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
     }
     header h1 {
-      font-size: 2.5rem;
-      margin-bottom: 5px;
+      font-size: 1.8rem;
+      user-select: none;
+      cursor: default;
     }
-    header p {
-      font-size: 1.2rem;
-      font-weight: 300;
+    /* Buscador en header */
+    #buscadorHeader {
+      flex-grow: 1;
+      max-width: 400px;
+      margin-left: 20px;
     }
+    #buscadorHeader input {
+      width: 100%;
+      padding: 8px 12px;
+      border: none;
+      border-radius: 5px;
+      font-size: 1rem;
+      box-shadow: 0 0 5px rgba(0,0,0,0.3);
+      transition: box-shadow 0.3s ease;
+    }
+    #buscadorHeader input:focus {
+      outline: none;
+      box-shadow: 0 0 8px #00796b;
+    }
+    /* Navegación sticky */
     nav {
-      background: #00695c;
+      background-color: #00695c;
       display: flex;
       justify-content: center;
       gap: 40px;
-      padding: 15px 0;
+      padding: 12px 0;
       position: sticky;
-      top: 80px;
-      z-index: 90;
+      top: 56px; /* header altura aprox 56px */
+      z-index: 999;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
     }
     nav a {
       color: #cfd8dc;
       font-weight: 600;
       text-decoration: none;
       font-size: 1.1rem;
-      padding: 5px 10px;
+      padding: 6px 15px;
       border-radius: 5px;
       transition: background-color 0.3s ease, color 0.3s ease;
     }
-    nav a:hover {
+    nav a:hover, nav a:focus {
       background-color: #004d40;
       color: #fff;
     }
-    section {
+    /* Sección Hero simple */
+    #inicio {
+      background: #00796b;
+      color: white;
+      padding: 60px 20px 40px;
+      text-align: center;
+      font-weight: 600;
+      font-size: 1.2rem;
+    }
+    #inicio h2 {
+      font-size: 2.4rem;
+      margin-bottom: 12px;
+      font-weight: 700;
+    }
+    /* Catálogo */
+    #catalogo {
       max-width: 1100px;
       margin: 40px auto;
-      padding: 0 20px;
+      padding: 0 20px 40px;
     }
-    section h2 {
+    #catalogo h2 {
+      color: #004d40;
       font-size: 2rem;
-      margin-bottom: 20px;
+      margin-bottom: 25px;
       border-bottom: 3px solid #004d40;
       padding-bottom: 10px;
-      color: #004d40;
-    }
-    #catalogo {
-      visibility: hidden;
-      height: 0;
-      overflow: hidden;
-      transition: height 0.3s ease;
+      font-weight: 700;
     }
     .catalogo {
       display: grid;
-      grid-template-columns: repeat(auto-fit,minmax(250px,1fr));
-      gap: 30px;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 25px;
     }
     .producto {
-      background: #fff;
-      border-radius: 10px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.12);
       padding: 20px;
       text-align: center;
-      transition: transform 0.3s ease;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
     .producto:hover {
-      transform: translateY(-8px);
-      box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+      transform: translateY(-10px);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.15);
     }
     .producto img {
-      width: 100%;
+      max-width: 100%;
       height: 180px;
       object-fit: contain;
       margin-bottom: 15px;
     }
     .producto h3 {
-      margin-bottom: 10px;
+      font-size: 1.3rem;
+      margin-bottom: 8px;
       color: #00796b;
-      font-size: 1.2rem;
     }
     .producto p {
-      font-size: 0.95rem;
       color: #444;
-      margin-bottom: 10px;
+      font-size: 1rem;
+      margin-bottom: 12px;
+      flex-grow: 1;
     }
-    .producto .precio {
+    .precio {
       color: #e53935;
-      font-weight: bold;
-      font-size: 1.1rem;
+      font-weight: 700;
+      font-size: 1.2rem;
+    }
+    /* Mensaje sin resultados */
+    #mensajeNoEncontrado {
+      display: none;
+      color: #e53935;
+      font-weight: 700;
+      text-align: center;
+      margin-top: 30px;
+      font-size: 1.2rem;
+    }
+    /* Contacto */
+    #contacto {
+      background: #004d40;
+      color: #e0e0e0;
+      padding: 40px 20px;
+      text-align: center;
+    }
+    #contacto h2 {
+      font-size: 2rem;
+      margin-bottom: 20px;
+      font-weight: 700;
     }
     #contacto p {
+      margin-bottom: 12px;
       font-size: 1.1rem;
-      margin-bottom: 10px;
     }
     #contacto a {
-      color: #00796b;
+      color: #a5d6a7;
+      font-weight: 700;
       text-decoration: none;
-      font-weight: 600;
+      transition: color 0.3s ease;
     }
-    #contacto a:hover {
+    #contacto a:hover, #contacto a:focus {
+      color: #c8e6c9;
       text-decoration: underline;
     }
+    /* Footer */
     footer {
-      background: #004d40;
-      color: #ccc;
+      background: #00332b;
+      color: #9e9e9e;
       text-align: center;
       padding: 20px 10px;
-      margin-top: 60px;
       font-size: 0.9rem;
+      margin-top: auto;
+      user-select: none;
     }
-    @media (max-width: 600px) {
-      header h1 {
-        font-size: 1.8rem;
+    /* Responsive */
+    @media (max-width: 768px) {
+      header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+      }
+      #buscadorHeader {
+        max-width: 100%;
+        margin-left: 0;
+        width: 100%;
       }
       nav {
-        gap: 15px;
-        padding: 10px 0;
-      }
-      nav a {
+        gap: 20px;
         font-size: 1rem;
       }
-      section {
-        margin: 20px 10px;
-        padding: 0 10px;
+      .producto img {
+        height: 140px;
+      }
+    }
+    @media (max-width: 480px) {
+      header h1 {
+        font-size: 1.5rem;
+      }
+      nav {
+        gap: 12px;
+        padding: 10px 5px;
+      }
+      #inicio h2 {
+        font-size: 1.6rem;
+      }
+      .producto {
+        padding: 15px;
+      }
+      .producto img {
+        height: 120px;
       }
     }
   </style>
@@ -159,56 +241,66 @@
 <body>
   <header>
     <h1>Ferretería Due</h1>
-    <p>Todo lo que necesitás en un solo lugar</p>
+    <div id="buscadorHeader">
+      <input
+        type="text"
+        id="inputBuscador"
+        placeholder="Buscar producto..."
+        aria-label="Buscar producto"
+        onkeyup="filtrarProductos()"
+      />
+    </div>
   </header>
   <nav>
-    <a href="javascript:void(0)" onclick="ocultarCatalogoYVolverInicio()">Inicio</a>
+    <a href="javascript:void(0)" onclick="mostrarInicio()">Inicio</a>
     <a href="javascript:void(0)" onclick="mostrarCatalogo()">Catálogo</a>
     <a href="#contacto">Contacto</a>
   </nav>
+
   <section id="inicio">
     <h2>Bienvenidos a Ferretería Due</h2>
     <p>En Due encontrarás herramientas, materiales y soluciones para tu hogar o proyecto.</p>
   </section>
-  <section id="buscador">
-    <input type="text" id="inputBuscador" placeholder="Buscar producto..." onkeyup="filtrarProductos()" style="width: 100%; padding: 12px; font-size: 1rem; border-radius: 5px; border: none; box-shadow: 0 0 5px rgba(0,0,0,0.2);">
-  </section>
-  <section id="catalogo">
+
+  <section id="catalogo" style="display:none;">
     <h2>Catálogo de productos</h2>
-    <div class="catalogo">
+    <div class="catalogo" id="catalogoProductos">
       <div class="producto">
-        <img src="martillo.jpg" alt="Martillo">
+        <img src="martillo.jpg" alt="Martillo" />
         <h3>Martillo</h3>
         <p>Martillo de carpintero con mango de madera.</p>
         <span class="precio">$5.000</span>
       </div>
       <div class="producto">
-        <img src="destornillador.jpg" alt="Destornillador">
+        <img src="destornillador.jpg" alt="Destornillador" />
         <h3>Destornillador</h3>
         <p>Destornillador plano de acero templado.</p>
         <span class="precio">$3.200</span>
       </div>
       <div class="producto">
-        <img src="pintura.jpg" alt="Pintura Latex">
+        <img src="pintura.jpg" alt="Pintura Latex" />
         <h3>Pintura Latex</h3>
         <p>Pintura blanca para interior/exterior, 4L.</p>
         <span class="precio">$7.500</span>
       </div>
     </div>
-    <div id="mensajeNoEncontrado" style="display: none; color: #ff5555; text-align: center; font-weight: bold; margin-top: 20px;">
-      No se encontraron productos.
-    </div>
+    <div id="mensajeNoEncontrado">No se encontraron productos.</div>
   </section>
+
   <section id="contacto">
     <h2>Contacto</h2>
     <p>Teléfono: <a href="tel:1121833706">1121833706</a></p>
     <p>Email: <a href="mailto:santosulises240@gmail.com">santosulises240@gmail.com</a></p>
   </section>
+
   <footer>
     <p>&copy; 2025 Ferretería Due</p>
   </footer>
 
   <script>
+    const inicioSection = document.getElementById('inicio');
+    const catalogoSection = document.getElementById('catalogo');
+
     function filtrarProductos() {
       const input = document.getElementById('inputBuscador');
       const filtro = input.value.toLowerCase();
@@ -216,31 +308,38 @@
       const mensaje = document.getElementById('mensajeNoEncontrado');
       let hayCoincidencias = false;
 
-      productos.forEach(prod => {
+      productos.forEach((prod) => {
         const texto = prod.innerText.toLowerCase();
         const coincide = texto.includes(filtro);
-        prod.style.display = coincide ? 'block' : 'none';
+        prod.style.display = coincide ? 'flex' : 'none';
         if (coincide) hayCoincidencias = true;
       });
 
       mensaje.style.display = hayCoincidencias ? 'none' : 'block';
+
+      // Si hay búsqueda, mostramos catálogo automáticamente
+      if (filtro.trim() !== '') {
+        mostrarCatalogo();
+      }
     }
 
-    function ocultarCatalogoYVolverInicio() {
-      const catalogo = document.getElementById('catalogo');
-      catalogo.style.visibility = 'hidden';
-      catalogo.style.height = '0';
-      catalogo.style.overflow = 'hidden';
+    function mostrarInicio() {
+      inicioSection.style.display = 'block';
+      catalogoSection.style.display = 'none';
+      // Limpiar búsqueda y resultados
+      document.getElementById('inputBuscador').value = '';
+      filtrarProductos();
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
     function mostrarCatalogo() {
-      const catalogo = document.getElementById('catalogo');
-      catalogo.style.visibility = 'visible';
-      catalogo.style.height = 'auto';
-      catalogo.style.overflow = 'visible';
-      window.scrollTo({ top: catalogo.offsetTop, behavior: 'smooth' });
+      inicioSection.style.display = 'none';
+      catalogoSection.style.display = 'block';
+      window.scrollTo({ top: catalogoSection.offsetTop, behavior: 'smooth' });
     }
+
+    // Al cargar la página mostrar inicio y limpiar catálogo
+    window.onload = mostrarInicio;
   </script>
 </body>
 </html>
