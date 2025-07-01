@@ -221,9 +221,12 @@
 </style>
 </head>
 <body>
-
-<header>Ferretería Due</header>
-
+<header>
+  <div style="display: flex; justify-content: space-between; align-items: center;">
+    <span>Ferretería Due</span>
+    <input type="text" id="searchBar" placeholder="Buscar producto..." style="padding: 8px 12px; font-size: 1rem; border-radius: 5px; border: none; outline: none; width: 250px;" />
+  </div>
+</header>
 <nav>
   <ul class="menu" role="menubar">
     <li role="none"><a href="#" role="menuitem" id="menuInicio" class="active">Inicio</a></li>
