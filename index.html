@@ -382,7 +382,6 @@
 <footer>
   &copy; 2025 Ferretería Due
 </footer>
-
 <script>
   const megaMenu = document.getElementById('megaMenuContainer');
   const btnCatalogo = document.getElementById('menuCatalogo');
@@ -391,6 +390,7 @@
   const contactoSection = document.getElementById('contacto');
   const catalogoSection = document.getElementById('catalogo');
   const menuLinks = document.querySelectorAll('.menu > li > a');
+  const searchBar = document.getElementById('searchBar');
 
   function mostrarSeccion(seccion) {
     if(seccion === 'inicio') {
@@ -423,10 +423,30 @@
     mostrarSeccion('inicio');
   });
 
+  // Filtro de productos con cambio de vista automático
+  searchBar.addEventListener('input', () => {
+    mostrarSeccion('catalogo');
+
+    const filtro = searchBar.value.toLowerCase();
+    const productos = document.querySelectorAll('.producto');
+    let hayCoincidencias = false;
+
+    productos.forEach(prod => {
+      const texto = prod.innerText.toLowerCase();
+      const coincide = texto.includes(filtro);
+      prod.style.display = coincide ? 'block' : 'none';
+      if (coincide) hayCoincidencias = true;
+    });
+
+    const mensaje = document.getElementById('mensajeNoEncontrado');
+    if (mensaje) {
+      mensaje.style.display = hayCoincidencias ? 'none' : 'block';
+    }
+  });
+
   // Inicial
   mostrarSeccion('inicio');
 </script>
-
 </body>
 </html>
 
