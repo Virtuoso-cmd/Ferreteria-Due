@@ -186,6 +186,17 @@
   </footer>
 
   <script>
+    function filtrarProductos() {
+  const input = document.getElementById('inputBuscador');
+  const filtro = input.value.toLowerCase();
+  const productos = document.querySelectorAll('.producto');
+
+  productos.forEach(prod => {
+    const texto = prod.innerText.toLowerCase();
+    prod.style.display = texto.includes(filtro) ? 'block' : 'none';
+  });
+}
+
     function ocultarCatalogoYVolverInicio() {
       const catalogo = document.getElementById('catalogo');
       catalogo.style.visibility = 'hidden';
