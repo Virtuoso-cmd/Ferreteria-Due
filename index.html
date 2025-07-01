@@ -220,6 +220,70 @@
   }
 </style>
 </head>
+ <script>
+  const megaMenu = document.getElementById('megaMenuContainer');
+  const btnCatalogo = document.getElementById('menuCatalogo');
+  const btnInicio = document.getElementById('menuInicio');
+  const inicioSection = document.getElementById('inicio');
+  const contactoSection = document.getElementById('contacto');
+  const catalogoSection = document.getElementById('catalogo');
+  const menuLinks = document.querySelectorAll('.menu > li > a');
+  const searchBar = document.getElementById('searchBar');
+
+  function mostrarSeccion(seccion) {
+    if (seccion === 'inicio') {
+      inicioSection.style.display = 'block';
+      contactoSection.style.display = 'block';
+      catalogoSection.style.display = 'none';
+      megaMenu.classList.remove('active');
+      marcarActivo(btnInicio);
+    } else if (seccion === 'catalogo') {
+      inicioSection.style.display = 'none';
+      contactoSection.style.display = 'none';
+      catalogoSection.style.display = 'block';
+      megaMenu.classList.add('active');
+      marcarActivo(btnCatalogo);
+    }
+  }
+
+  function marcarActivo(link) {
+    menuLinks.forEach(a => a.classList.remove('active'));
+    if (link) link.classList.add('active');
+  }
+
+  btnCatalogo.addEventListener('click', e => {
+    e.preventDefault();
+    mostrarSeccion('catalogo');
+  });
+
+  btnInicio.addEventListener('click', e => {
+    e.preventDefault();
+    mostrarSeccion('inicio');
+  });
+
+  // Filtro de productos
+  searchBar.addEventListener('input', () => {
+    const filtro = searchBar.value.toLowerCase();
+    const productos = document.querySelectorAll('.producto');
+    let hayCoincidencias = false;
+
+    productos.forEach(prod => {
+      const texto = prod.innerText.toLowerCase();
+      const coincide = texto.includes(filtro);
+      prod.style.display = coincide ? 'block' : 'none';
+      if (coincide) hayCoincidencias = true;
+    });
+
+    const mensaje = document.getElementById('mensajeNoEncontrado');
+    if (mensaje) {
+      mensaje.style.display = hayCoincidencias ? 'none' : 'block';
+    }
+  });
+
+  // Mostrar inicio al cargar
+  mostrarSeccion('inicio');
+</script>
+
 <body>
 <header>
   <div style="display: flex; justify-content: space-between; align-items: center;">
