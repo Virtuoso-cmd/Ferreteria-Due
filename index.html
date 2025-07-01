@@ -3,11 +3,12 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Ferretería Due - Mega Menú Catálogo</title>
+<title>Ferretería Due</title>
 <style>
   * {
     box-sizing: border-box;
-    margin: 0; padding: 0;
+    margin: 0;
+    padding: 0;
   }
   body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -56,430 +57,150 @@
     background: #004d40;
     color: white;
   }
-
-  /* Mega menú completo desplegado */
-  #megaMenuContainer {
+  #carritoOverlay {
     display: none;
-    width: 100vw;
-    background: #004d40;
-    color: #cfd8dc;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.4);
-    padding: 20px 40px;
-    box-sizing: border-box;
-    position: absolute;
-    top: 100%;
-    left: 0;
-    z-index: 9999;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 50px;
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 320px;
+    height: 100%;
+    background: #fefefe;
+    box-shadow: -2px 0 10px rgba(0,0,0,0.3);
+    z-index: 99999;
+    padding: 20px;
+    overflow-y: auto;
+    transition: right 0.3s ease;
   }
-  #megaMenuContainer.active {
-    display: flex;
-  }
-  .mega-column {
-    min-width: 180px;
-  }
-  .mega-column h3 {
-    color: #a5d6a7;
-    margin-bottom: 12px;
-    font-weight: 700;
-    font-size: 1.1rem;
-  }
-  .mega-column ul {
-    list-style: none;
-  }
-  .mega-column ul li {
-    margin-bottom: 8px;
-  }
-  .mega-column ul li a {
-    color: #cfd8dc;
-    text-decoration: none;
-    font-weight: 500;
-    font-size: 0.95rem;
-    cursor: pointer;
-    user-select: none;
-  }
-  .mega-column ul li a:hover,
-  .mega-column ul li a:focus {
-    color: #fff;
-    text-decoration: underline;
-  }
-
-  /* Secciones contenido */
-  main {
-    flex-grow: 1;
-  }
-  #inicio, #contacto, #catalogo {
-    max-width: 1100px;
-    margin: 40px auto;
-    padding: 0 20px;
-  }
-  #inicio h2, #catalogo h2, #contacto h2 {
-    font-size: 2rem;
-    margin-bottom: 20px;
-    font-weight: 700;
+  #carritoOverlay h2 {
+    font-size: 1.5rem;
     color: #004d40;
   }
-  #inicio p, #contacto p {
-    font-size: 1.1rem;
-    line-height: 1.5;
+  #carritoOverlay button.close {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
   }
-  #catalogo {
-    display: none;
+  #carritoOverlay .item {
+    margin-bottom: 10px;
   }
-  .catalogo {
-    display: grid;
-    grid-template-columns: repeat(auto-fit,minmax(250px,1fr));
-    gap: 30px;
+  #carritoOverlay a {
+    display: inline-block;
+    margin-top: 20px;
+    background: #25D366;
+    color: white;
+    text-align: center;
+    padding: 10px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-weight: bold;
+  }
+  main {
+    padding: 20px;
   }
   .producto {
-    background: #fff;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    padding: 20px;
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    transition: transform 0.3s ease;
-  }
-  .producto:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+    border: 1px solid #ccc;
+    padding: 15px;
+    margin-bottom: 20px;
   }
   .producto img {
     width: 100%;
-    height: 180px;
-    object-fit: contain;
-    margin-bottom: 15px;
-  }
-  .producto h3 {
-    margin-bottom: 10px;
-    color: #00796b;
-    font-size: 1.3rem;
-  }
-  .producto p {
-    font-size: 1rem;
-    color: #444;
-    margin-bottom: 12px;
-  }
-  .precio {
-    color: #e53935;
-    font-weight: 700;
-    font-size: 1.2rem;
-  }
-
-  #contacto {
-    background: #004d40;
-    color: #ccc;
-    padding: 40px 20px;
-    text-align: center;
-  }
-  #contacto a {
-    color: #a5d6a7;
-    text-decoration: none;
-    font-weight: 600;
-  }
-  #contacto a:hover {
-    text-decoration: underline;
-  }
-
-  footer {
-    background: #00332b;
-    color: #9e9e9e;
-    text-align: center;
-    padding: 20px 10px;
-    font-size: 0.9rem;
-    user-select: none;
-  }
-
-  /* Carrito */
-  #carritoContainer {
-    margin-top: 40px;
-    max-width: 600px;
-    background: #f5f5f5;
-    padding: 15px;
-    border-radius: 8px;
-    display: none;
-  }
-  #carritoLista {
-    list-style:none;
-    padding-left:0;
-  }
-  #carritoLista li {
-    margin-bottom: 8px;
-  }
-  #finalizarCompra {
-    background:#004d40;
-    color:#fff;
-    padding:10px 20px;
-    border:none;
-    border-radius:5px;
-    cursor:pointer;
-    font-weight: 700;
-  }
-
-  /* Responsive */
-  @media (max-width: 900px) {
-    #megaMenuContainer {
-      position: static;
-      width: 100%;
-      box-shadow: none;
-      padding: 20px 10px;
-      gap: 20px;
-      flex-wrap: wrap;
-    }
-    nav .menu {
-      flex-wrap: wrap;
-      justify-content: flex-start;
-      gap: 10px;
-    }
-  }
-  @media (max-width: 480px) {
-    .producto img {
-      height: 140px;
-    }
-    .producto h3 {
-      font-size: 1.1rem;
-    }
+    max-width: 250px;
+    height: auto;
   }
 </style>
 </head>
-
 <body>
 <header>
   <div style="display: flex; justify-content: space-between; align-items: center;">
     <span>Ferretería Due</span>
-    <input type="text" id="searchBar" placeholder="Buscar producto..." style="padding: 8px 12px; font-size: 1rem; border-radius: 5px; border: none; outline: none; width: 250px;" />
+    <div style="display: flex; align-items: center; gap: 15px;">
+      <input type="text" id="searchBar" placeholder="Buscar producto..." style="padding: 8px 12px; font-size: 1rem; border-radius: 5px; border: none; outline: none; width: 250px;" />
+      <button onclick="toggleCarrito()" style="background:none; border:none; cursor:pointer; font-size:1.5rem; color:white;" title="Ver carrito">🛒</button>
+    </div>
   </div>
 </header>
-
 <nav>
-  <ul class="menu" role="menubar">
-    <li role="none"><a href="#" role="menuitem" id="menuInicio" class="active">Inicio</a></li>
-    <li role="none"><a href="#" role="menuitem" id="menuCatalogo">Catálogo ▾</a></li>
-    <li role="none"><a href="#contacto" role="menuitem">Contacto</a></li>
+  <ul class="menu">
+    <li><a href="#" onclick="mostrarSeccion('inicio')">Inicio</a></li>
+    <li><a href="#" onclick="mostrarSeccion('catalogo')">Catálogo</a></li>
+    <li><a href="#" onclick="mostrarSeccion('contacto')">Contacto</a></li>
   </ul>
-
-  <!-- Mega menú desplegado completo -->
-  <div id="megaMenuContainer" aria-label="Catálogo completo">
-    <div class="mega-column">
-      <h3>Por Marca</h3>
-      <ul>
-        <li><a href="#">Marca A</a></li>
-        <li><a href="#">Marca B</a></li>
-        <li><a href="#">Marca C</a></li>
-      </ul>
-    </div>
-    <div class="mega-column">
-      <h3>Electricista</h3>
-      <ul>
-        <li><a href="#">prueba 1</a></li>
-        <li><a href="#">prueba 2</a></li>
-      </ul>
-      <h3>Herramientas manuales</h3>
-      <ul>
-        <li><a href="#">Equipos</a></li>
-        <li><a href="#">Accesorios</a></li>
-        <li><a href="#">brocas</a></li>
-        <li><a href="#">discos de corte</a></li>
-      </ul>
-    </div>
-    <div class="mega-column">
-      <h3>Manuales</h3>
-      <ul>
-        <li><a href="#">alicates</a></li>
-        <li><a href="#">pinzas</a></li>
-      </ul>
-    </div>
-    <div class="mega-column">
-      <h3>Industriales</h3>
-      <h3>Neumáticas</h3>
-      <h3>Medición</h3>
-      <h3>Para Jardín</h3>
-      <h3>Accesorios</h3>
-     <div id="mensajeNoEncontrado" style="display: none; text-align: center; margin-top: 20px; font-weight: bold; color: #e53935;">
-      No se encontraron productos.
-    </div>
-    </div>
-  </div>
 </nav>
-
 <main>
   <section id="inicio">
     <h2>Bienvenidos a Ferretería Due</h2>
-    <p>En Due encontrarás herramientas, materiales y soluciones para tu hogar o proyecto.</p>
+    <p>Encontrá herramientas, materiales y todo lo que necesitás.</p>
   </section>
-
-  <section id="catalogo">
-    <h2>Catálogo de productos</h2>
-    <div class="catalogo">
-      <div class="producto">
-        <img src="martillo.jpg" alt="Martillo" />
-        <h3>Martillo</h3>
-        <p>Martillo de carpintero con mango de madera.</p>
-        <span class="precio">$5.000</span>
-      </div>
-      <div class="producto">
-        <img src="destornillador.jpg" alt="Destornillador" />
-        <h3>Destornillador</h3>
-        <p>Destornillador plano de acero templado.</p>
-        <span class="precio">$3.200</span>
-      </div>
-      <div class="producto">
-        <img src="pintura.jpg" alt="Pintura Latex" />
-        <h3>Pintura Latex</h3>
-        <p>Pintura blanca para interior/exterior, 4L.</p>
-        <span class="precio">$7.500</span>
-      </div>
+  <section id="catalogo" style="display:none">
+    <h2>Catálogo</h2>
+    <div class="producto">
+      <img src="martillo.jpg" alt="Martillo" />
+      <h3>Martillo</h3>
+      <p class="precio">$5.000</p>
     </div>
-
-    <!-- Contenedor carrito -->
-    <div id="carritoContainer">
-      <h3>Carrito de compras</h3>
-      <ul id="carritoLista"></ul>
-      <p><strong>Total: $<span id="carritoTotal">0</span></strong></p>
-      <button id="finalizarCompra">Finalizar compra</button>
+    <div class="producto">
+      <img src="destornillador.jpg" alt="Destornillador" />
+      <h3>Destornillador</h3>
+      <p class="precio">$3.200</p>
     </div>
   </section>
-
-  <section id="contacto">
+  <section id="contacto" style="display:none">
     <h2>Contacto</h2>
-    <p>Teléfono: <a href="tel:1121833706">1121833706</a></p>
-    <p>Email: <a href="mailto:santosulises240@gmail.com">santosulises240@gmail.com</a></p>
+    <p>Email: contacto@ferreteria.com</p>
   </section>
 </main>
-
-<footer>
-  &copy; 2025 Ferretería Due
-</footer>
-
+<div id="carritoOverlay">
+  <div style="display:flex; justify-content:space-between; align-items:center;">
+    <h2>Carrito</h2>
+    <button class="close" onclick="toggleCarrito()">×</button>
+  </div>
+  <div id="listaCarrito" style="margin-top:20px;"></div>
+  <a id="btnEnviarWhatsapp" href="#" target="_blank">Enviar pedido por WhatsApp</a>
+</div>
 <script>
-  const megaMenu = document.getElementById('megaMenuContainer');
-  const btnCatalogo = document.getElementById('menuCatalogo');
-  const btnInicio = document.getElementById('menuInicio');
-  const inicioSection = document.getElementById('inicio');
-  const contactoSection = document.getElementById('contacto');
-  const catalogoSection = document.getElementById('catalogo');
-  const menuLinks = document.querySelectorAll('.menu > li > a');
-  const searchBar = document.getElementById('searchBar');
-
-  function mostrarSeccion(seccion) {
-    if (seccion === 'inicio') {
-      inicioSection.style.display = 'block';
-      contactoSection.style.display = 'block';
-      catalogoSection.style.display = 'none';
-      megaMenu.classList.remove('active');
-      marcarActivo(btnInicio);
-    } else if (seccion === 'catalogo') {
-      inicioSection.style.display = 'none';
-      contactoSection.style.display = 'none';
-      catalogoSection.style.display = 'block';
-      megaMenu.classList.add('active');
-      marcarActivo(btnCatalogo);
-    }
-  }
-
-  function marcarActivo(link) {
-    menuLinks.forEach(a => a.classList.remove('active'));
-    if (link) link.classList.add('active');
-  }
-
-  btnCatalogo.addEventListener('click', e => {
-    e.preventDefault();
-    mostrarSeccion('catalogo');
-  });
-
-  btnInicio.addEventListener('click', e => {
-    e.preventDefault();
-    mostrarSeccion('inicio');
-  });
-
-  // Filtro de productos
-  searchBar.addEventListener('input', () => {
-    const filtro = searchBar.value.toLowerCase();
-    const productos = document.querySelectorAll('.producto');
-    let hayCoincidencias = false;
-
-    productos.forEach(prod => {
-      const texto = prod.innerText.toLowerCase();
-      const coincide = texto.includes(filtro);
-      prod.style.display = coincide ? 'block' : 'none';
-      if (coincide) hayCoincidencias = true;
-    });
-
-    const mensaje = document.getElementById('mensajeNoEncontrado');
-    if (mensaje) {
-      mensaje.style.display = hayCoincidencias ? 'none' : 'block';
-    }
-  });
-
-  // Mostrar inicio al cargar
-  mostrarSeccion('inicio');
-
-  // ------------------ Carrito ------------------
-  const carrito = {};
-  const carritoLista = document.getElementById('carritoLista');
-  const carritoTotal = document.getElementById('carritoTotal');
-  const carritoContainer = document.getElementById('carritoContainer');
-  const finalizarCompraBtn = document.getElementById('finalizarCompra');
-
-  // Agregar botón "Agregar al carrito" a cada producto
+const carrito = [];
+const carritoOverlay = document.getElementById('carritoOverlay');
+const listaCarrito = document.getElementById('listaCarrito');
+const btnEnviarWhatsapp = document.getElementById('btnEnviarWhatsapp');
+function agregarAlCarrito(nombre, precio) {
+  carrito.push({ nombre, precio });
+  renderizarCarrito();
+  toggleCarrito(true);
+}
+function renderizarCarrito() {
+  listaCarrito.innerHTML = carrito.map(item =>
+    `<div class="item"><strong>${item.nombre}</strong><br>$${item.precio}</div>`
+  ).join('');
+  const mensaje = carrito.map(p => `- ${p.nombre} ($${p.precio})`).join('%0A');
+  btnEnviarWhatsapp.href = `https://wa.me/541121833706?text=Hola%20Ferretería%20Due,%20quiero%20hacer%20este%20pedido:%0A${mensaje}`;
+}
+function toggleCarrito(forzarAbrir = null) {
+  const visible = carritoOverlay.style.display === 'block';
+  carritoOverlay.style.display = (forzarAbrir === true || (!visible && forzarAbrir !== false)) ? 'block' : 'none';
+}
+function mostrarSeccion(id) {
+  document.querySelectorAll('main section').forEach(sec => sec.style.display = 'none');
+  document.getElementById(id).style.display = 'block';
+}
+document.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('.producto').forEach(prod => {
-    const btnAgregar = document.createElement('button');
-    btnAgregar.textContent = 'Agregar al carrito';
-    btnAgregar.style.marginTop = '10px';
-    btnAgregar.style.padding = '8px';
-    btnAgregar.style.border = 'none';
-    btnAgregar.style.background = '#00796b';
-    btnAgregar.style.color = 'white';
-    btnAgregar.style.borderRadius = '5px';
-    btnAgregar.style.cursor = 'pointer';
-
-    btnAgregar.addEventListener('click', () => {
-      const nombre = prod.querySelector('h3').textContent;
-      // Quitar símbolos para convertir precio a número
-      const precioText = prod.querySelector('.precio').textContent.replace(/\./g, '').replace('$', '').trim();
-      const precio = parseInt(precioText) || 0;
-      if (carrito[nombre]) {
-        carrito[nombre].cantidad++;
-      } else {
-        carrito[nombre] = { cantidad: 1, precio };
-      }
-      actualizarCarrito();
-    });
-
-    prod.appendChild(btnAgregar);
+    const btn = document.createElement('button');
+    btn.textContent = 'Agregar al carrito';
+    btn.style.marginTop = '10px';
+    btn.style.padding = '8px';
+    btn.style.border = 'none';
+    btn.style.background = '#00796b';
+    btn.style.color = 'white';
+    btn.style.borderRadius = '5px';
+    btn.style.cursor = 'pointer';
+    const nombre = prod.querySelector('h3').textContent;
+    const precio = parseInt(prod.querySelector('.precio').textContent.replace('$', '').replace('.', '').trim());
+    btn.addEventListener('click', () => agregarAlCarrito(nombre, precio));
+    prod.appendChild(btn);
   });
-
-  function actualizarCarrito() {
-    carritoLista.innerHTML = '';
-    let total = 0;
-    let itemsCount = 0;
-    for (const producto in carrito) {
-      const item = carrito[producto];
-      const li = document.createElement('li');
-      li.textContent = `${producto} x${item.cantidad} - $${item.precio * item.cantidad}`;
-      carritoLista.appendChild(li);
-      total += item.precio * item.cantidad;
-      itemsCount += item.cantidad;
-    }
-    carritoTotal.textContent = total.toLocaleString();
-    carritoContainer.style.display = itemsCount > 0 ? 'block' : 'none';
-  }
-
-  finalizarCompraBtn.addEventListener('click', () => {
-    let mensaje = 'Hola, quiero hacer el siguiente pedido:%0A';
-    for (const producto in carrito) {
-      const item = carrito[producto];
-      mensaje += `- ${producto} x${item.cantidad}%0A`;
-    }
-    const telefonoFerreteria = '5491121833704'; // Cambia por el teléfono real, sin espacios ni signos
-    const urlWhatsapp = `https://wa.me/${telefonoFerreteria}?text=${mensaje}`;
-    window.open(urlWhatsapp, '_blank');
-  });
+});
 </script>
-
 </body>
 </html>
+
